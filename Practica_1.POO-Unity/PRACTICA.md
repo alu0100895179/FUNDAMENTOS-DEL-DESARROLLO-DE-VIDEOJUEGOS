@@ -3,6 +3,8 @@
 ## Alumno
 Jaime Madico Cañete
 
+![Demostración del carrusel](Docs/demo-carrusel.gif)
+
 ## Resumen
 En la sesión 2 se trabajará las bases de la programación y programación orientada a objetos a través de ejercicios. 
 Los alumnos deben crear un repositorio en Github que será utilizado para subir los scripts del proyecto. 
