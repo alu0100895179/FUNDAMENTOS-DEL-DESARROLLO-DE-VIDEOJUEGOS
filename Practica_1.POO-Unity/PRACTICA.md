@@ -26,4 +26,24 @@ También se verá un ejemplo de cómo documentar la entrega de prácticas median
 
 ---
 
-## Ejemplos
+## Ejemplos extraídos del código entregado
+
+### Variables - Operadores - Métodos
+- Variable: `public Vector3 nuevoTamano = new Vector3(2f,2f,2f);`
+- Operador / método: `tamano = Mathf.Min(cubos_c.Length, colores.Length);`
+- Método (coroutine): `public IEnumerator CambiarColor() { ... yield return new WaitForSeconds(tiempoDeEsperaC); }`
+
+### Referencias a componentes
+- `carruselColor = GetComponent<CarruselManagerColor>();`
+- `Renderer renderer = cubos_c[i].GetComponent<Renderer>();`
+
+### Sentencias de control
+- Detección de teclas: `if (Input.GetKeyDown(KeyCode.Space)) { ... }`
+- Iteración: `for (int i = 0; i < tamano; i++) { ... }`
+- Comprobaciones internas: `if (cubos_c[i] != null) { ... }`
+
+### Depuración de errores
+- Mensajes de log: `Debug.Log(...)`, `Debug.LogWarning(...)`, `Debug.LogError(...)`
+- Ejemplo: comprobación `null` antes de usar arrays y `yield break` en caso de error.
+
+	
