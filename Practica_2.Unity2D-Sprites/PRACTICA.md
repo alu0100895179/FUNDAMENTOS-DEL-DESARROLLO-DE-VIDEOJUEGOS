@@ -5,7 +5,7 @@
 - Alu: alu0100895179
 - Correo: alu0100895179@ull.edu.es
 
-### Demostración del carrusel
+### Demostración de movimiento horizonta y animaciones
 ![Demostración del carrusel](Docs/demo-desplazamiento-horizontal.gif)
 
 ## Entorno
@@ -14,10 +14,13 @@
 - Input System: Unity New Input System (UnityEngine.InputSystem)
 
 ## Resumen
-En esta práctica se trabaja el manejo de **Sprites** y su animación en un juego 2D con Unity. Se exploran:
+En esta práctica se trabaja el manejo de **Sprites** y su animación en un juego 2D con Unity.
+Para las animaciones se han utilizado los Assets contenidos en el recurso: "Recursos 2D", facilitados en el material de "Técnicas de desarrollo 2D" del aula virtual.
+
+Se exploran:
 
 - Uso de *SpriteRenderer* y *Animator*.
-- Generación de animaciones a partir de conjuntos de sprites o atlas (extracción previa si procede).
+- Generación de animaciones a partir de conjuntos de sprites (atlas).
 - Movimiento por *Transform* (sin físicas por el momento) y detección de distancia recorrida para cambiar estados.
 - Gestión de estados del animator mediante parámetros booleanos (ej. `isWalking`, `walkedFar`, `isBack`).
 
