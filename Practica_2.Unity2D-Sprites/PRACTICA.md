@@ -5,7 +5,7 @@
 - Alu: alu0100895179
 - Correo: alu0100895179@ull.edu.es
 
-### Demostración de movimiento horizonta y animaciones
+### Demostración de movimiento horizontal y animaciones
 ![Demostración del carrusel](Docs/demo-desplazamiento-horizontal.gif)
 
 ## Entorno
