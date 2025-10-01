@@ -15,8 +15,8 @@ public class MovimientoPersonaje2D : MonoBehaviour
     private bool walkedFar = false;
 
     // --- Variables para el temporizador de inactividad ---
+    public float idleThreshold = 3f;
     private float idleTimer = 0f;
-    private float idleThreshold = 3f;
     private bool idleFacingSet = false;
     // ----------------------------------------------------------
 
@@ -57,14 +57,22 @@ public class MovimientoPersonaje2D : MonoBehaviour
             else if(Keyboard.current.upArrowKey.isPressed){
                 horizontal = 0;                                      // Mirando hacia atrás
                 animator.SetBool(isWalkingParam, false);
+                animator.SetBool(walkedFarParam, false);
                 animator.SetBool(facingParam, true);
                 anyArrowPressed = true;
+
+                totalDistance = 0;
+                walkedFar = false;
             }
             else if(Keyboard.current.downArrowKey.isPressed){
                 horizontal = 0;                                      // Mirando hacia el frente
                 animator.SetBool(isWalkingParam, false);
+                animator.SetBool(walkedFarParam, false);
                 animator.SetBool(facingParam, false);
                 anyArrowPressed = true;
+
+                totalDistance = 0;
+                walkedFar = false;
             }
         }
         // Mover en X (movimiento horizontal)
