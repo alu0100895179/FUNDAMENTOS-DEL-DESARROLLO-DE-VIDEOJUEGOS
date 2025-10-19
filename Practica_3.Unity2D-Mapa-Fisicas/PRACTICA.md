@@ -26,13 +26,13 @@ En esta práctica se ha trabajado con el motor de físicas 2D y el sistema de Ti
 
 ---
 
-## Fichjeros más importantes entregados
+## Ficheros más importantes entregados
 
 - PRACTICA.md  
 - Scripts/
   - RotacionYMovimientoLocal2D.cs 
   - PlayerMovement.cs
-  
+
 ---
 
 ## Enunciado
