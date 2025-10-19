@@ -26,18 +26,13 @@ En esta práctica se ha trabajado con el motor de físicas 2D y el sistema de Ti
 
 ---
 
-## Archivos entregados
+## Fichjeros más importantes entregados
 
-- Docs/
-  - demo-desplazamiento-horizontal.gif  
 - PRACTICA.md  
-- Scenes/
-  - SampleScene.unity  
 - Scripts/
-  - MovimientoPersonaje2D.cs  
-- Sprites/
-  - idle-Back.anim  
-
+  - RotacionYMovimientoLocal2D.cs 
+  - PlayerMovement.cs
+  
 ---
 
 ## Enunciado
