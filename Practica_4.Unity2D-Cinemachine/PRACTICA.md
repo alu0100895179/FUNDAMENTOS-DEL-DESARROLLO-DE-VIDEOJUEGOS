@@ -72,6 +72,7 @@ Se configuraron dos vcam siguiendo al jugador `batMonster`:
 - Damping (X,Y,Z) = 0,0,0
 
 **Resultado:** La cámara sigue brusca e inmediatamente cualquier micro-movimiento del jugador.
+
 ![Cámara rígida](Docs/prueba1-1.gif)
 
 #### Cámara Suave (Seguimiento más profesional)
@@ -81,6 +82,7 @@ Se configuraron dos vcam siguiendo al jugador `batMonster`:
 - Damping (X,Y,Z) = 1,1,1
 
 **Resultado:** El jugador puede moverse en el centro sin que la cámara reaccione. Al salir de esa zona, la cámara lo sigue logrando un movimiento fluido y más elegante.
+
 ![Cámara suave](Docs/prueba1-2.gif)
 
 ---
@@ -128,6 +130,7 @@ Esto crea dos objetos en la jerarquía que denominaré:
 - `TargetGroup`: presenta el componente **Cinemachine Target Group** donde puedo añadir tantos *Targets* como elementos quiera que siga la cámara.
 
 Tras añadir todos los actores mencionados anteriormente en el grupo, se observa como la cámara se va ajustando automáticamente en todo momento para seguirlos y mantenerlos a todos por igual en la vista.
+
 ![Demo Target Group 1](Docs/prueba3-1.gif)
 
 ---
@@ -135,10 +138,8 @@ Tras añadir todos los actores mencionados anteriormente en el grupo, se observa
 ### Tarea 4
 *Agrega 2 sprites adicionales en la escena que estén realizando un movimiento Genera una cámara adicional que le haga el seguimiento a dichos objetos, cada uno con un peso en la importancia del seguimiento diferente.*
 
-Este ejercicio se plantea como una continuación inmediata del anterior. Copio al monstruo *eyeBallMonster* como *eyeBallMonster-2* y *eyeBallMonsterBoss* (este segundo tendrá un tamaño superior como diseño de "una amenaza mayor"), de esta cuento con 5 actores que la cámara deberá seguir.
-
-Para las pruebas  genero un nuevo:
-- `TargetGroup` denominado ***TargetGroupWeight***, donde paso a tener 5 elementos con diferentes pesos:
+Este ejercicio se plantea como una continuación inmediata del anterior. Copio al monstruo *eyeBallMonster* como *eyeBallMonster-2* y *eyeBallMonsterBoss* (este segundo tendrá un tamaño superior como diseño de "una amenaza mayor"). Coneste cambio, cuento con 5 actores que la cámara deberá seguir, por ello para las pruebas  genero un nuevo:
+- `TargetGroup` denominado ***TargetGroupWeight***, donde recojo los 5 elementos con diferentes pesos:
 
 | Taget (*nombre*) | W (*Peso*) |
 | :--- | ---: |
@@ -151,6 +152,7 @@ Para las pruebas  genero un nuevo:
 - `CMTargetGroupCamera`: Misma cámara virtual que use en el ejercicio anterior. Solo que ahora modifico a mano el *Target Group* asociado en generado en el campo ***Tracking Target***.
 
 Ahora ciertamente la cámara se comporta de manera ligeramente diferente, sigue haciendo manteniendo los ítems incluidos en el el grupo dentro de la vista de la cámara, pero con movimientos que tratan de dar prioridad en centrar a los elementos con mayor peso, influyendo estos más en el movimiento de la cámara.
+
 ![Demo Target Group 2](Docs/prueba4-1.gif)
 
 ---
