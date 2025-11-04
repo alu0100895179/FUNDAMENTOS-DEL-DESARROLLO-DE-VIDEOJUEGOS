@@ -32,6 +32,7 @@ En esta práctica se ha trabajado con el motor de físicas 2D y el sistema de Ti
 - Scripts/
   - RotacionYMovimientoLocal2D.cs 
   - PlayerMovement.cs
+  - PhyscisLogger2D.cs
 
 ---
 

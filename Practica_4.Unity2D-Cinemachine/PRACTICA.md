@@ -102,6 +102,7 @@ El primer GIF muestra la configuración de la extensión en las cámaras. Los do
 - **Bounding Shape 2D**: `CameraLimit1` (Box Collider 2D ajustado a la izquierda)
 
 **Resultado:** La cámara sigue al jugador (rígidamente) y se detiene en los bordes anchos definidos por `CameraLimit1`, impidiendo ver el lado derecho del mapa.
+
 ![Demo Límite 1](Docs/prueba2-2.gif)
 
 #### Cámara 2 (Suave): Restringido a lado izquierdo
@@ -110,6 +111,7 @@ El primer GIF muestra la configuración de la extensión en las cámaras. Los do
 - **Bounding Shape 2D**: `CameraLimit2` (Box Collider 2D ajustado a la derecha)
 
 **Resultado:** La cámara sigue al jugador (con la configuración definida en la tarea 1) y se detiene en los bordes anchos definidos por `CameraLimit2`, impidiendo ver el lado izquierdo del mapa.
+
 ![Demo Límite 2](Docs/prueba2-3.gif)
 
 ---
