@@ -28,12 +28,14 @@ Se entrega un repositorio GitHub con los scripts y gifs demostrativos, y un .zip
 
 - PRACTICA.md  
 - Scripts/
-  - CameraPrioritySwap.cs
-  - CameraSwitcher.cs
-  - simpleLoopLateralMovement.cs
-  - simpleLoopVerticalMovement.cs
-  - TimeScaleScript.cs
-  - ZoomController.cs
+  - eventCollisionController
+  - PlayerMovement.cs
+  - prefabProjectileController.cs
+  - ProjectileControl.cs
+  - ProjectileControl_ej1.cs
+  - ProjectileControl_ej2.cs
+  - ProjectileControl_ej3.cs
+  - ProjectileControl_ej4.cs
 
 ---
 
