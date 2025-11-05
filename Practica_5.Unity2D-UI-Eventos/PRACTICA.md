@@ -6,7 +6,7 @@
 - Correo: alu0100895179@ull.edu.es
 
 ### Demostración de ejecución
-![Practica Eventos Demo](Docs/pruebax-x.gif)
+![Practica Eventos Demo](Docs/prueba7-1.gif)
 
 ## Entorno
 - Unity 6.2: 6000.2.7f2
