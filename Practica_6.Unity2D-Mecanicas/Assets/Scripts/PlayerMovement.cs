@@ -159,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         if ((collision.gameObject.layer == groundLayer) || (collision.gameObject.layer == invisiblePlatformLayer))
         {
             isGrounded = false;
-            animator.SetBool("Grounded",isGrounded);
+            animator.SetBool("Grounded", isGrounded);
 
             // Adicionalmente, comprobamos si era una plataforma móvil
             if (collision.gameObject.CompareTag("MovingPlatform"))
@@ -177,7 +177,12 @@ public class PlayerMovement : MonoBehaviour
                 }
                 Debug.Log("Liberado de la plataforma");
             }
-            
         }
+    }
+    
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if ((collision.gameObject.layer == groundLayer) || (collision.gameObject.layer == invisiblePlatformLayer))
+            isGrounded = true;
     }
 }
