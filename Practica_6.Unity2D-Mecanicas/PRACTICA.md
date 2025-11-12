@@ -194,13 +194,14 @@ Con esto conseguimos controlarlo limpiamente, ya que `isGrounded` siempre reflej
 ---
 
 ### Ejercicio 2: Mécánicas relacionadas con plataformas - Salto a una plataforma
+*Esta mecánica se consigue con objetos físicos puesto que hay que implementar un salto, sin embargo, en este caso es necesario detectar la colisión con la plataforma y convertir el sistema de referencia del jugador en hijo de la plataforma. De esta forma conseguiremos que el jugador se mueva sobre/con ella. Del mismo modo una vez que el jugador no esté sobre la plataforma, debemos desvincularla de ella.*
 
 Para esta mecánica, el objetivo es que el jugador detecte una plataforma que esté en movimiento. La solución sería hacer que el jugador se convierta en hijo (`parent`) de la plataforma al aterrizar sobre ella, y deje de serlo al saltar (`SetParent(null)`).
 
 #### Creación del *Tag* `MovingPlatform`
 Para diferenciar el suelo normal (estático) de las plataformas móviles, he creado un nuevo **Tag** llamado **`MovingPlatform`**.
 
-Este Tag se lo he aplicado a los objetos de plataforma que tendrán movimiento. Para mis pruebas una plataforma móvil de madera. 
+Este Tag se lo he aplicado a los objetos de plataforma que tendrán movimiento. Para mis pruebas he utilizado una "plataforma móvil de madera". 
 
 He modificado la lógica de `isGrounded` del ejercicio anterior para que el jugador sepa que está "en el suelo" tanto si toca un objeto `Ground` como si toca un `MovingPlatform`.
 
@@ -254,6 +255,7 @@ Con esta implementación, si una plataforma marcada como `MovingPlatform` se mue
 * **Preservación de escala**: por cuestiones estéticas deseadas en el videojuego, la plataforma presenta una ***escala*** diferente en la escena. Si hacemos al jugador "hijo" directamente sin gestionar la escala, vemos que modifica su tamaño para adaptarse al padre. Para preservar la estética de nuestro personaje, he de almacenar y preservar su escala con código como: 
 ```csharp
 private Vector3 originalScale;
+originalScale = transform.localScale; 
 ...
     private void OnCollisionEnter2D(Collision2D collision){
         
@@ -309,7 +311,6 @@ private Vector3 originalScale;
 ---
 
 ### Ejercicio 3: Manejar colisiones con elementos de una capa determinada
-
 *Podemos utilizar las capas para que el efecto de las colisiones sólo se tenga en cuenta cuando se pertenece a una determinada capa, o se descarten.*
 
 Para este ejercicio, he reconfigurado la lógica de colisiones para que deje de usar `CompareTag("Ground")` y, en su lugar, utilice `Layers` (Capas), como método más eficiente y potente.
@@ -336,7 +337,7 @@ Para optimizar, he guardado el ID de la capa en `Start()` para no tener que busc
     }
 ```
 
-La lógica de `OnCollisionEnter2D` ahora comprueba en prinmer lugar el `Layer`. Si coincide, sabemos que estamos en el **suelo** (`isGrounded = true`). Además, mantenemos la comprobación del `Tag "MovingPlatform"` para gestionar la lógica de `SetParent`.
+La lógica de `OnCollisionEnter2D` ahora comprueba en primer lugar el `Layer`. Si coincide, sabemos que estamos en el **suelo** (`isGrounded = true`). Además, mantenemos la comprobación del `Tag "MovingPlatform"` para gestionar la lógica de `SetParent`.
 ```csharp
     // --- CONTROL DE COLISIÓN (SUELO Y PLATAFORMAS MÓVILES) ---
     // Modificado teniendo en cuenta LAYERS
@@ -416,6 +417,7 @@ Para este ejercicio, y siguiendo la pauta del enunciado, he centralizado la lóg
     }
     ```
 
+
 #### Añadir mecánica a el *Script* `PlayerMovement`
 He modificado el `PlayerMovement` para que sea consciente de esta nueva capa y la gestione.
 
@@ -429,9 +431,9 @@ Para optimizar, he guardado el ID de la nueva capa en `Start()`, siguiendo la mi
     {
         // ... (resto del Start) ...
         
-        // Guardamos el ID de la capa "Terrain" UNA SOLA VEZ
+        // Guardamos el ID de la capa "Terrain"
         groundLayer = LayerMask.NameToLayer("Terrain");
-        // Guardamos el ID de la capa "PlatInv" UNA SOLA VEZ
+        // Guardamos el ID de la capa "PlatInv"
         invisiblePlatformLayer = LayerMask.NameToLayer("PlatInv");
     }
 ```
@@ -489,11 +491,11 @@ Para esta mecánica final, he adoptado un enfoque de **modularización de la ló
 
 #### Configuración del recolectable (Poción)
 He creado un prefab de "Poción" (el objeto animado) y le he añadido:
-* Un `Collider 2D` (ej. `BoxCollider2D`).
+* Un `Collider 2D` (concretamente `BoxCollider2D`).
 * La casilla `Is Trigger` marcada (para que se pueda atravesar, sin físicas, ya que no es necesario).
 * El nuevo script `Collectible.cs`.
 
-Este script (`Collectible.cs`) se activa cuando un objeto entra en su *trigger*. Comprueba si es el "Player" y, de ser así, llama al script `PlayerStats` del jugador antes de autodestruirse.
+Este script (`Collectible.cs`) se activa cuando un objeto entra en su *trigger*. Comprueba si es el "Player" y, de ser así, llama al script `PlayerStats` del jugador, para sumar al contador, antes de autodestruirse.
 
 ```csharp
 
@@ -516,6 +518,7 @@ Este script (`Collectible.cs`) se activa cuando un objeto entra en su *trigger*.
         }
     }
 ```
+
 
 #### Configuraciones del *Player*: Stats
 He añadido el script `PlayerStats.cs` al `GameObject` del Jugador. Este script actúa como el gestor central de la mecánica de recolección.
@@ -586,7 +589,7 @@ Este script se encarga de:
 
     Esta corrutina es una secuencia de eventos pausada en el tiempo:
     1.  **Activación:** Inmediatamente, da feedback visual al jugador: cambia el color del sprite a amarillo y el texto de la UI a "SUPER JUMP!".
-    2.  **Espera:** Pausa la corrutina (pero no el juego) durante los 10 segundos especificados (`yield return new WaitForSeconds(...)`). Durante este tiempo, el jugador disfruta del salto mejorado.
+    2.  **Espera:** Pausa la corrutina durante los segundos especificados (`yield return new WaitForSeconds(...)`). Durante este tiempo, el jugador disfruta del salto mejorado.
     3.  **Reseteo:** Una vez transcurrido el tiempo, el código se reanuda y revierte todo al estado original: restaura el `baseJumpForce`, resetea el `currentJumpPower` a 0, actualiza la UI al contador normal y devuelve el sprite a su color original.
 ```csharp
     private IEnumerator ApplyPowerUp()
@@ -623,7 +626,7 @@ public void UpgradeJump(float newJumpForce)
 }
 // ... (el resto del script no cambia) ...
 ```
-El resumen del sistema es moudalar pero sencillo: las pociones son "simples" (solo detectan al jugador e indican el aumento del contador antes desaparecer), el PlayerStats es el "cerebro" que cuenta y aplica mejoras, y el PlayerMovement solo obedece órdenes sobre su fuerza de salto.
+El resumen del sistema es modular pero sencillo: las pociones son "simples" (solo detectan al jugador e indican el aumento del contador antes desaparecer), el PlayerStats es el "cerebro" que cuenta y aplica mejoras, y el PlayerMovement solo ha sido modificado en que obedece órdenes sobre su fuerza de salto.
 
 ![Ejercicio5-1](Docs/prueba5-1.gif)
 
@@ -640,8 +643,8 @@ Mientras **`Grounded`** sea **`true`**, el personaje alterna entre dos estados:
 
 #### Despegue (salto vs. caída)
 Cuando **`Grounded`** se vuelve **`false`**, se usa **`VelocityY`** (la velocidad vertical) para decidir, así como la variable **`RealJump`** que actúa como "chivato" de cuándo el jugador pulsa "Espacio":
-* **A `jump` (Salto):** Si `Grounded` es `false` **Y** `VelocityY` es **`> 0.1`** (subiendo). La variable **`RealJump`** nos ayuda a distinguir falsos positivos por cambios ligeros en el terreno.
-* **A `fall` (Caída):** Si `Grounded` es `false` **Y** `VelocityY` es **`< -0.6`** (bajando, como al caer de un bordillo). Damos algo de margen en la comparación para distinguir falsos positivos por cambios ligeros en el terreno.
+* **-> `jump` (Salto):** Si `Grounded` es `false` **Y** `VelocityY` es **`> 0.1`** (subiendo). La variable **`RealJump`** nos ayuda a distinguir falsos positivos por cambios ligeros en el terreno.
+* **-> `fall` (Caída):** Si `Grounded` es `false` **Y** `VelocityY` es **`< -0.6`** (bajando, como al caer de un bordillo). Damos algo de margen en la comparación para distinguir falsos positivos por cambios ligeros en el terreno.
 
 #### Transición en el aire
 Hay una transición clave para pasar de la animación de subida a la de bajada:
@@ -650,6 +653,5 @@ Hay una transición clave para pasar de la animación de subida a la de bajada:
 ### Aterrizaje
 * Desde `jump` no se podrá regresar directamente a un estado de suelo (consideraremos, por pequeña que sea, que en algún momento tiene que dejar de subir para empezar a caer).
 * Desde `fall` sí que se gestionarán se regresa al suelo, únicamente al estado `idle`, transición que se activa en cuanto **`Grounded`** vuelve a ser **`true`**. Si inmediatamente reaunada la marcha se modificará `Speed`y volverá a `running`.
-```
 
 ![Ejercicio6-1](Docs/prueba6-1.gif)
