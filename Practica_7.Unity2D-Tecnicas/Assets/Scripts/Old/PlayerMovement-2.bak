@@ -1,0 +1,159 @@
+using UnityEngine;
+using UnityEngine.InputSystem; // Nuevo sistema de entrada
+
+// Se necesita un Rigidbody2D en el objeto: movimiento físico.
+// Forzamos que se añada automáticamente si falta.
+[RequireComponent(typeof(Rigidbody2D))]
+public class PlayerMovement : MonoBehaviour
+{
+    // Variables ajustables en el Inspector
+    [Header("Velocidades")]
+    [SerializeField] private float normalSpeed = 5f;
+    [SerializeField] private float turboSpeed = 10f;
+    [SerializeField] private float jumpForce = 5f; // Variable para el salto
+
+    private float speed;
+    private float h = 0f; // Para el input horizontal
+    private bool isGrounded = false; // Flag para controlar si estamos en el suelo
+
+    // Componentes
+    private SpriteRenderer sprite;  // Referencia al sprite del actor que se moverá
+    private Rigidbody2D rb2D;       // Necesario para físicas y salto
+    private Animator animator;      // Necesario para controlar animaciones
+
+    private Vector3 originalScale;
+
+    void Start()
+    {
+        speed = normalSpeed;
+
+        // Obtener referencia al Animator y SpriteRenderer
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+
+        rb2D = GetComponent<Rigidbody2D>(); // Obtenemos el Rigidbody
+        originalScale = transform.localScale;
+
+        // Congelar la rotación Z para que el personaje no se caiga
+        rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    // En Update se leen Inputs
+    void Update()
+    {
+        // --- 1. LEER INPUT HORIZONTAL ---
+        // Reseteamos h a 0 en cada frame
+        h = 0f;
+        if (Keyboard.current.aKey.isPressed || Keyboard.current.leftArrowKey.isPressed)
+            h = -1f;
+
+        if (Keyboard.current.dKey.isPressed || Keyboard.current.rightArrowKey.isPressed)
+            h = 1f;
+           
+        // --- 2. LEER INPUT DE SALTO ---
+        // 'wasPressedThisFrame' mejor para un salto (solo se activa una vez)
+        // Se añade la comprobación '&& isGrounded'
+        if (Keyboard.current.spaceKey.wasPressedThisFrame && isGrounded)
+        {
+            // Aplicamos la fuerza de salto vertical
+            // Usamos 'Impulse' para una "explosión" instantánea de fuerza
+            // (Sin comprobar 'isGrounded', como pediste. Puedes saltar en el aire)
+            rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            Debug.Log("¡Saltando!");
+        }
+
+        // --- 3. VOLTEAR EL SPRITE Y OBJETOS HIJOS (si los hubiera) ---
+        if (h > 0.01f)
+        {
+            // Mirar a la derecha: restaura la escala original
+            transform.localScale = originalScale;
+        }
+        else if (h < -0.01f)
+        {
+            // Mirar a la izquierda: invierte la escala en X
+            transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+
+        }
+        animator.SetFloat("Speed", h * h * speed);
+    }
+
+    // FixedUpdate, para aplicar sísicas (se sincroniza con el motor de física)
+    void FixedUpdate()
+    {
+        // --- 4. APLICAR MOVIMIENTO HORIZONTAL ---
+        // Mantenemos la velocidad vertical (rb2D.velocity.y) que ya tenga (gravedad o salto)
+        // y solo modificamos la velocidad horizontal (h * speed).
+        rb2D.linearVelocity = new Vector2(h * speed, rb2D.linearVelocity.y);
+    }
+
+    // --- CONTROL DE COLISIÓN (SUELO Y PLATAFORMAS MÓVILES) ---
+    // Se llama cuando el collider del jugador toca otro collider
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Si el jugador colisiona con un objeto con la etiqueta "Ground"
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            // Estamos en el suelo
+            isGrounded = true; 
+        } else
+        // Comprobamos si es una plataforma MOVIL ("MovingPlatform")
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            isGrounded = true;
+            // Nos hacemos hijos de la plataforma para movernos con ella
+            transform.SetParent(collision.transform);
+            
+            // --- ¡NUEVA LÍNEA! ---
+            // Compensamos nuestra escala original para que coincida con el nuevo padre
+            Vector3 platformScale = collision.transform.localScale;
+            originalScale.x /= platformScale.x;
+            originalScale.y /= platformScale.y;
+            originalScale.z /= platformScale.z;
+            
+            Debug.Log("Anclado a plataforma");
+        }
+    }
+
+    // Se llama cuando el collider del jugador deja de tocar otro collider
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // Si dejamos de tocar el suelo
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            // Ya no estamos en el suelo
+            isGrounded = false;
+        }
+        else
+        // Comprobamos si salimos de la plataforma movil
+        if (collision.gameObject.CompareTag("MovingPlatform"))
+        {
+            isGrounded = false;
+
+            // Restauramos la escala original ANTES de soltarnos
+            Vector3 platformScale = collision.transform.localScale;
+            originalScale.x *= platformScale.x;
+            originalScale.y *= platformScale.y;
+            originalScale.z *= platformScale.z;
+
+            // Nos "independizamos" de la plataforma
+            transform.SetParent(null);
+            Debug.Log("Liberado de plataforma");
+        }
+    }
+
+    // --- FUNCIÓN PÚBLICA PARA LA UI ---
+    // Función para el Toggle
+    public void SetTurboMode(bool isTurboOn)
+    {
+        if (isTurboOn)
+        {
+            speed = turboSpeed;
+            Debug.Log("Modo Turbo ACTIVADO");
+        }
+        else
+        {
+            speed = normalSpeed;
+            Debug.Log("Modo Turbo DESACTIVADO");
+        }
+    }
+}
