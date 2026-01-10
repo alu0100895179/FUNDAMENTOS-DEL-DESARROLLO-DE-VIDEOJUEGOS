@@ -221,7 +221,7 @@ void Update(){
 ```
 
 - **Conclusiones:**
-Como adelantaba el enunciado, si solo multiplicamos por "speed" se pueden producir inconsistencias espacio-temporales (la velocidad de desplazamiento depende de la velocidad entre "frames"). Para suavizar este movimiento se debe ultiplicar por `Time.deltaTime` (el tiempo en segundos que tardó en renderizarse el último frame). Convertimos la velocidad de "unidades/frame" a "unidades/segundo". De esta manera la velocidad de desplazamiento es completamente estable.
+Como adelantaba el enunciado, si solo multiplicamos por "speed" se pueden producir inconsistencias espacio-temporales (la velocidad de desplazamiento depende de la velocidad entre "frames"). Para controlar y estabilizar este movimiento se debe multiplicar por `Time.deltaTime` (el tiempo en segundos que tardó en renderizarse el último frame). Convertimos la velocidad de "unidades/frame" a "unidades/segundo". De esta manera la velocidad de desplazamiento es completamente estable.
 
 ![Ejercicio 2](Docs/prueba2-1.gif)
 
@@ -341,7 +341,7 @@ public class Chaser : MonoBehaviour
         // Recalcular dirección hacia la nueva posición del cubo
         Vector3 direction = goal.position - this.transform.position;
 
-        // Moverse hacia él (Space.World para tener en cuenta coodenadas del mundo)
+        // Moverse hacia él (Space.World para tener en cuenta coordenadas del mundo)
         this.transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
     }
 }
@@ -588,7 +588,7 @@ void Update()
 **Conclusiones:**
 - Al usar `GameObject.FindGameObjectsWithTag("waypoint")`, el script llena dinámicamente el array waypoints al iniciar el juego. Nota: si queremos asegurar un orden podemos gestionar el array manualmente.
 - La variable `currentWP` actúa como puntero. Al llegar cerca del objetivo (`magnitude < accuracy`), incrementamos este índice.
-- Circuito infinito: La condición `if (currentWP >= waypoints.Length) currentWP = 0;` asegura que, tras llegar al último punto, el personaje regrese al primero, creando un ciclo inenterrumpido.
+- Circuito infinito: La condición `if (currentWP >= waypoints.Length) currentWP = 0;` asegura que, tras llegar al último punto, el personaje regrese al primero, creando un ciclo ininterrumpido.
 
 ![Ejercicio 9](Docs/prueba9-1.gif)
 
@@ -609,7 +609,7 @@ La lógica cambia ligeramente: en lugar de que el personaje decida a dónde ir, 
 **Paso 2: Configuración del objetivo `CircuitTarget`**
 1. Añado a la escena una esfera verde que servirá de guía visual. Le asigno el nombre `CircuitTarget`.
 2. Desactivo el **`Collider`** de este cubo para que no choque con otros objetos.
-3. Más adelante asignaré su `Transform` al script de *Tracker* para que nuestro persnaje la pueda seguir.
+3. Más adelante asignaré su `Transform` al script de *Tracker* para que nuestro personaje la pueda seguir.
 4. Este objeto no es realmente necesario, ya que **WaypointProgressTracker** crea automáticamente un objeto al que seguir, pero es recomendable asignar una geometría 3D en la escena para tener un *chivato visual*.
 
 **Paso 3: Configuración del personaje (`WaypointProgressTracker.cs`)**
@@ -619,7 +619,7 @@ La lógica cambia ligeramente: en lugar de que el personaje decida a dónde ir, 
     * **Circuit:** Asigno el objeto `Circuit` del paso 1.
     * **Look Ahead For Target Offset (`3`):** Es la distancia que el *target* se intentará mantener por delante del jugador.
     * **Progress Style (`Smooth Along Route`):** Asegura que el objetivo se deslice suavemente por las curvas del circuito, interpolando la posición entre los waypoints físicos.
-    * **Target(`CircuitTarget (Transform)`):** Con ello se calculará los cáculos del posicionamiento del objetivo a seguir sobre la esfera verde que generamos anteriormente.
+    * **Target(`CircuitTarget (Transform)`):** Con ello se calculará los cálculos del posicionamiento del objetivo a seguir sobre la esfera verde que generamos anteriormente.
 
 **Conclusiones:** Con esto logramos que se establece una mecánica de persecución continua donde el `WaypointProgressTracker` desplaza el objetivo a lo largo del circuito manteniéndolo siempre una distancia fija por delante del personaje. Esto permite recorrer trayectorias curvas complejas delegando el cálculo de la ruta al sistema de Unity, mientras nuestro personaje simplemente ejecuta una lógica básica de persecución hacia ese punto móvil.
 
