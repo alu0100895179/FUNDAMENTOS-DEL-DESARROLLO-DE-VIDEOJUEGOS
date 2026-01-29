@@ -113,18 +113,14 @@ public class MovimientoDoppler : MonoBehaviour
 
 * **Conclusiones:** ya con ese script podemos escuchar los efectos del sonido 3D en un objeto en movimiento, por ejemplo usando auriculares, como pasa de escucharse de derecha a izquierda, así como la diferencia de volumen según la distancia. Al aumentar el `Doppler Level` se hace aún más evidente la distorsión, asemejándose al de un objeto que pasa a gran velocidad (como en las carreras de F1).
 
-<video src="Docs/ejercicio2-1.mp4" controls width="500">
-  Tu navegador no soporta la etiqueta de video.
-</video>
+https://github.com/user-attachments/assets/76d9ea35-59aa-4774-a908-e904a9b2ba66
 
 * **Experimentos realizados:**
 
 1.  **Incrementar el valor del parámetro `Spread`:**
     * *Explicación:* Al aumentar el `Spread`, el sonido empieza a tener una mayor dispersión y menos direccionalidad precisa, en cierto modo  ganando presencia ambiental. Haciendo pruebas de direccionalidad, colocando la fuente de sonido a la derecha, si se establece a `180` da la sensación de que el sonido viene de igual forma por todas direcciones, si llego hasta 360, ya directamente pareciera que viene de la dirección opuesta.
 
-    <video src="Docs/ejercicio2-2.mp4" controls width="500">
-    Tu navegador no soporta la etiqueta de video.
-    </video>
+   https://github.com/alu0100895179/FUNDAMENTOS-DEL-DESARROLLO-DE-VIDEOJUEGOS/blob/main/Practica_9.Sonido/Docs/ejercicio2-2.mp4 
 
 2.  **Cambiar `Min Distance` y `Max Distance`:**
     * *Explicación:* `Min Distance` define el radio donde el sonido se escucha al máximo volumen. `Max Distance` es el punto donde el sonido deja de atenuarse (o se silencia, dependiendo del `Rolloff`). Ajustando esto controlamos el alcance real del audio. Por ello, por ejemplo, si vamos aumentando el valor mínimo, vamos viendo como va aumentando cada vez más el volumen aunque no se mueva la esfera. Para `Max Distance` se hace más evidente la modificación si usamos `Lineal Rolloff`.
@@ -144,9 +140,7 @@ public class MovimientoDoppler : MonoBehaviour
 
 Para realizar esta prueba, he cambiado el `Audio Listener` de la cámara al cubo de la escena. He configurado la `Reverb Zone` tal y como se indica en el enunciado, `Min Distance` a *5* y `Max Distance` a *10*. Para que se note más el efecto he cambiado el `Preset` a `Sewerpipe`. 
 
-<video src="Docs/ejercicio2-5.mp4" controls width="500">
-Tu navegador no soporta la etiqueta de video.
-</video>
+https://github.com/user-attachments/assets/13dce7ba-ec88-4879-9277-a70caf0e7656 
 
 ---
 
@@ -447,9 +441,7 @@ public class ejercicio8 : MonoBehaviour
     * **Detección de suelo (`Physics.Raycast`):** Lanzo un rayo invisible hacia abajo (`Vector3.down`) de longitud `groundDistance`. Esto evita que suenen pasos si el cubo está saltando o en el aire.
     * **Control de Ritmo (`stepRate`):** Si simplemente reprodujera el sonido al moverse, sonaría en cada frame haciendo un estruendo debido a las repeticiones. He implementado un temporizador (`nextStepTime`) que obliga a esperar un tiempo (ej: 0.5 segundos) entre paso y paso, logrando un ritmo natural de caminata.
 
-<video src="Docs/ejercicio8-1.mp4" controls width="500">
-Tu navegador no soporta la etiqueta de video.
-</video>
+https://github.com/user-attachments/assets/ba65330d-fa87-49bd-854a-e0e8fd0e19fc
 
 ---
 
