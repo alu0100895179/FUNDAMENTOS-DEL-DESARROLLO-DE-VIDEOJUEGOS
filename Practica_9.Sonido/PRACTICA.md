@@ -118,7 +118,7 @@ public class MovimientoDoppler : MonoBehaviour
 1.  **Incrementar el valor del parámetro `Spread`:**
     * *Explicación:* Al aumentar el `Spread`, el sonido empieza a tener una mayor dispersión y menos direccionalidad precisa, en cierto modo  ganando presencia ambiental. Haciendo pruebas de direccionalidad, colocando la fuente de sonido a la derecha, si se establece a `180` da la sensación de que el sonido viene de igual forma por todas direcciones, si llego hasta 360, ya directamente pareciera que viene de la dirección opuesta.
 
-    [Descargar vídeo del ejercicio 2.2](Docs/ejercicio2-1.mp4)
+    [Descargar vídeo del ejercicio 2.2](Docs/ejercicio2-2.mp4)
 
 2.  **Cambiar `Min Distance` y `Max Distance`:**
     * *Explicación:* `Min Distance` define el radio donde el sonido se escucha al máximo volumen. `Max Distance` es el punto donde el sonido deja de atenuarse (o se silencia, dependiendo del `Rolloff`). Ajustando esto controlamos el alcance real del audio. Por ello, por ejemplo, si vamos aumentando el valor mínimo, vamos viendo como va aumentando cada vez más el volumen aunque no se mueva la esfera. Para `Max Distance` se hace más evidente la modificación si usamos `Lineal Rolloff`.
@@ -157,7 +157,7 @@ He configurado un `AudioMixer` llamado **MyAudioMixer** organizando el flujo de 
 - **Cambios logrados:**
 He logrado masterizar la escena separando las frecuencias y los ambientes. La música de fondo suena ahora más pesada y distorsionada gracias al *Pitch Shifter* y *Chorus*, mientras que el sonido de impacto en la esfera se mantiene nítido pero con una cola de eco larga que no se mezcla con los efectos de la música. He decidido no aplicar la configuración `Loop`al sonido del golpe para que se note más fácilmente el efecto de eco.
 
-[Descargar vídeo del ejercicio 3.3](Docs/ejercicio3-3.mp4)
+[Descargar vídeo del ejercicio 3](Docs/ejercicio3-3.mp4)
 
 ---
 
@@ -221,7 +221,7 @@ void Update()
         * Al pulsar **'S'**, utilizo `Stop()` para detener el audio inmediatamente y desactivo el bucle.
     * **Lógica de movimiento:** Utilizo una variable booleana `moving` para permitir el desplazamiento en el `Update`. Además, he añadido una variable `direction` (1 o -1) que se invierte cada vez que paramos el objeto, haciendo que la esfera cambie de sentido la próxima vez que arranque.
 
-[Descargar vídeo del ejercicio 4.1](Docs/ejercicio4-1.mp4)
+[Descargar vídeo del ejercicio 4](Docs/ejercicio4-1.mp4)
 
 ---
 
@@ -265,7 +265,7 @@ void OnTriggerEnter(Collider other)
     * **Variable pública (`collisionClip`):** He creado un campo público para arrastrar el clip de audio específico de "choque" desde el `Inspector`, lo que hace el código más flexible.
     * **Uso de `PlayOneShot`:** Esta función es muy adecuada para sonidos de impacto o colisión. A diferencia de `Play()` (que detiene el sonido actual para empezar de nuevo), `PlayOneShot` reproduce el sonido una vez encima de lo que ya esté sonando. Esto evita cortes bruscos si el jugador atraviesa varias esferas rápidamente.
 
-[Descargar vídeo del ejercicio 5.1](Docs/ejercicio5-1.mp4)
+[Descargar vídeo del ejercicio 5](Docs/ejercicio5-1.mp4)
 
 ---
 
@@ -342,7 +342,7 @@ public class ejercicio6 : MonoBehaviour
     * **Normalización (`Mathf.Clamp01`):** Para asegurar que, si el cubo va rapidísimo, el volumen no supere el valor de 1 (lo que podría distorsionar el audio) ni sea negativo.
     * **Modulación:** Finalmente, paso este valor calculado (`dynamicVolume`) como segundo parámetro a `PlayOneShot(clip, volume)`, logrando que los impactos lentos suenen tenues y los rápidos suenen con toda su intensidad.
 
-[Descargar vídeo del ejercicio 6.1](Docs/ejercicio6-1.mp4)
+[Descargar vídeo del ejercicio 6](Docs/ejercicio6-1.mp4)
 
 ---
 
@@ -364,7 +364,7 @@ He integrado una banda sonora continua en la escena y he organizado las salidas 
 - **Resultado:**
     Ahora tengo canales independientes para la música y los efectos de sonido. Esto me permite, por ejemplo, bajar el volumen de la música sin afectar a la intensidad de los golpes, o aplicar efectos ambientales solo a los efectos de sonido (*SFX*) manteniendo la música limpia.
 
-[Descargar vídeo del ejercicio 7.1](Docs/ejercicio7-1.mp4)
+[Imagen del ejercicio 7](Docs/ejercicio7-1.png)
 
 ---
 
@@ -427,7 +427,7 @@ public class ejercicio8 : MonoBehaviour
     * **Detección de suelo (`Physics.Raycast`):** Lanzo un rayo invisible hacia abajo (`Vector3.down`) de longitud `groundDistance`. Esto evita que suenen pasos si el cubo está saltando o en el aire.
     * **Control de Ritmo (`stepRate`):** Si simplemente reprodujera el sonido al moverse, sonaría en cada frame haciendo un estruendo debido a las repeticiones. He implementado un temporizador (`nextStepTime`) que obliga a esperar un tiempo (ej: 0.5 segundos) entre paso y paso, logrando un ritmo natural de caminata.
 
-[Descargar vídeo del ejercicio 8.1](Docs/ejercicio8-1.mp4)
+[Descargar vídeo del ejercicio 8](Docs/ejercicio8-1.mp4)
 
 ---
 
@@ -516,4 +516,4 @@ He conectado la lógica de juego con el sistema de audio mediante métodos públ
 ![Configuración del Mixer](Docs/ejercicio9-1.png)
 ![Inspector del Player](Docs/ejercicio9-2.png)
 
-[Descargar vídeo del ejercicio 9.1](Docs/ejercicio9-1.mp4)
+[Descargar vídeo del ejercicio 9](Docs/ejercicio9-1.mp4)
