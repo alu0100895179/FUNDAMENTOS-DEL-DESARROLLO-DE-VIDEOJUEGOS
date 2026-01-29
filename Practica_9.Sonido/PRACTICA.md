@@ -113,30 +113,30 @@ public class MovimientoDoppler : MonoBehaviour
 
 * **Conclusiones:** ya con ese script podemos escuchar los efectos del sonido 3D en un objeto en movimiento, por ejemplo usando auriculares, como pasa de escucharse de derecha a izquierda, así como la diferencia de volumen según la distancia. Al aumentar el `Doppler Level` se hace aún más evidente la distorsión, asemejándose al de un objeto que pasa a gran velocidad (como en las carreras de F1).
 
-[Ver vídeo del ejercicio](./Docs/ejercicio2-1.mp4)
+[Ver vídeo del ejercicio 2](Docs/ejercicio2-1.mp4)
 
 * **Experimentos realizados:**
 
 1.  **Incrementar el valor del parámetro `Spread`:**
     * *Explicación:* Al aumentar el `Spread`, el sonido empieza a tener una mayor dispersión y menos direccionalidad precisa, en cierto modo  ganando presencia ambiental. Haciendo pruebas de direccionalidad, colocando la fuente de sonido a la derecha, si se establece a `180` da la sensación de que el sonido viene de igual forma por todas direcciones, si llego hasta 360, ya directamente pareciera que viene de la dirección opuesta.
 
-    [Ver vídeo del ejercicio](./Docs/ejercicio2-1.mp4)
+    [Ver vídeo del ejercicio 2.1](Docs/ejercicio2-1.mp4)
 
 2.  **Cambiar `Min Distance` y `Max Distance`:**
     * *Explicación:* `Min Distance` define el radio donde el sonido se escucha al máximo volumen. `Max Distance` es el punto donde el sonido deja de atenuarse (o se silencia, dependiendo del `Rolloff`). Ajustando esto controlamos el alcance real del audio. Por ello, por ejemplo, si vamos aumentando el valor mínimo, vamos viendo como va aumentando cada vez más el volumen aunque no se mueva la esfera. Para `Max Distance` se hace más evidente la modificación si usamos `Lineal Rolloff`.
 
-    [Ver vídeo del ejercicio](./Docs/Docs/ejercicio2-3.mp4)
+    [Ver vídeo del ejercicio 2.2](Docs/ejercicio2-3.mp4)
 
 3.  **Cambiar de `Logarithmic Rolloff` a `Linear Rolloff`:**
     * *Explicación:* El modo Logarítmico simula la realidad (el sonido decae rápido al principio y luego lento). El modo Lineal baja el volumen de forma constante y artificial, útil para mecánicas de juego específicas pero menos realista
 
-    [Ver vídeo del ejercicio](./Docs/Docs/ejercicio2-4.mp4)
+    [Ver vídeo del ejercicio 2.3](Docs/ejercicio2-4.mp4)
 
 *Enunciado: Prueba sencilla de `ReverbZone`.*
 
 Para realizar esta prueba, he cambiado el `Audio Listener` de la cámara al cubo de la escena. He configurado la `Reverb Zone` tal y como se indica en el enunciado, `Min Distance` a *5* y `Max Distance` a *10*. Para que se note más el efecto he cambiado el `Preset` a `Sewerpipe`. 
 
-[Ver vídeo del ejercicio](./Docs/Docs/ejercicio2-5.mp4)
+[Ver vídeo del ejercicio 2.4](Docs/ejercicio2-5.mp4)
 
 ---
 
